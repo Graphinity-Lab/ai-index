@@ -1,0 +1,81 @@
+{
+  "lastSynced": "2026-11-25T20:52:49.224Z",
+  "verdictInfra": "SILICON LAYER: RECORD PROFITS ($184B+)",
+  "verdictModelLayer": "MODEL & HYPERSCALER LAYER: CAPEX DEFICIT",
+  "annualCapexRunRateB": 520,
+  "annualRealizedSoftwareRevB": 98,
+  "infraToSoftwareRatio": 5.31,
+  "estBreakevenYear": "2028-2029 (Est.)",
+  "yearlyLedger": [
+    {
+      "year": "2023",
+      "hyperscalerCapexB": 158,
+      "siliconProfitB": 42,
+      "modelAppRevenueB": 12,
+      "frontierBurnB": 14
+    },
+    {
+      "year": "2024",
+      "hyperscalerCapexB": 254,
+      "siliconProfitB": 89,
+      "modelAppRevenueB": 31,
+      "frontierBurnB": 28
+    },
+    {
+      "year": "2025",
+      "hyperscalerCapexB": 392,
+      "siliconProfitB": 138,
+      "modelAppRevenueB": 62,
+      "frontierBurnB": 44
+    },
+    {
+      "year": "2026 (Run-Rate)",
+      "hyperscalerCapexB": 520,
+      "siliconProfitB": 184,
+      "modelAppRevenueB": 98,
+      "frontierBurnB": 58
+    }
+  ],
+  "circularDeals": [
+    {
+      "id": "deal-msft-oai",
+      "from": "Microsoft (Azure)",
+      "to": "OpenAI",
+      "amountB": 13.75,
+      "mechanism": "Equity + Azure Compute Credits",
+      "description": "Capital invested flows back to Azure GPU cluster rentals & API hosting."
+    },
+    {
+      "id": "deal-amzn-anth",
+      "from": "Amazon (AWS)",
+      "to": "Anthropic",
+      "amountB": 8,
+      "mechanism": "Convertible Note + Trainium Commitments",
+      "description": "Anthropic commits primary training & Bedrock inference workloads to AWS silicon."
+    },
+    {
+      "id": "deal-nvda-coreweave",
+      "from": "NVIDIA",
+      "to": "CoreWeave / NeoClouds",
+      "amountB": 2.3,
+      "mechanism": "Equity Stake + Priority B200 Allocation",
+      "description": "GPU-backed debt facilities accelerate hyperscale cluster purchases from NVIDIA."
+    },
+    {
+      "id": "deal-goog-anth",
+      "from": "Google (GCP)",
+      "to": "Anthropic",
+      "amountB": 3,
+      "mechanism": "Equity + TPU Cloud Commitments",
+      "description": "Multi-year Google Cloud TPU v5p/v6e reservation tied to strategic equity."
+    },
+    {
+      "id": "deal-orcl-xai",
+      "from": "Oracle / Stargate",
+      "to": "OpenAI & xAI",
+      "amountB": 40,
+      "mechanism": "Dedicated Mega-Cluster Leases",
+      "description": "Long-term GPU cluster leases financed via hyperscaler debt & CapEx."
+    }
+  ]
+}

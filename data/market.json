@@ -1,0 +1,680 @@
+{
+  "lastSynced": "2026-11-25T20:52:49.224Z",
+  "tickers": [
+    {
+      "symbol": "NVDA",
+      "name": "NVIDIA Corp",
+      "sector": "Silicon",
+      "price": 149.24,
+      "changePct": -1.14,
+      "marketCapB": 3490,
+      "peRatio": 52.4,
+      "yoyRevGrowthPct": 94,
+      "aiExposureScore": 98,
+      "dataCenterRevSharePct": 88,
+      "grossMarginPct": 74.6,
+      "source": "live"
+    },
+    {
+      "symbol": "AMD",
+      "name": "Advanced Micro Devices",
+      "sector": "Silicon",
+      "price": 402.17,
+      "changePct": -24.14,
+      "marketCapB": 224,
+      "peRatio": 44.1,
+      "yoyRevGrowthPct": 18,
+      "aiExposureScore": 76,
+      "dataCenterRevSharePct": 52,
+      "grossMarginPct": 53.6,
+      "source": "live"
+    },
+    {
+      "symbol": "AVGO",
+      "name": "Broadcom Inc",
+      "sector": "Silicon",
+      "price": 298.35,
+      "changePct": -15.73,
+      "marketCapB": 835,
+      "peRatio": 39.2,
+      "yoyRevGrowthPct": 47,
+      "aiExposureScore": 84,
+      "dataCenterRevSharePct": 58,
+      "grossMarginPct": 76.2,
+      "source": "live"
+    },
+    {
+      "symbol": "TSM",
+      "name": "TSMC",
+      "sector": "Silicon",
+      "price": 340.38,
+      "changePct": -6.13,
+      "marketCapB": 1005,
+      "peRatio": 28.6,
+      "yoyRevGrowthPct": 36,
+      "aiExposureScore": 92,
+      "dataCenterRevSharePct": 54,
+      "grossMarginPct": 57.8,
+      "source": "live"
+    },
+    {
+      "symbol": "ASML",
+      "name": "ASML Holding",
+      "sector": "Silicon",
+      "price": 1298.33,
+      "changePct": -6.95,
+      "marketCapB": 282,
+      "peRatio": 35.1,
+      "yoyRevGrowthPct": 12,
+      "aiExposureScore": 85,
+      "dataCenterRevSharePct": null,
+      "grossMarginPct": 51.3,
+      "source": "live"
+    },
+    {
+      "symbol": "MU",
+      "name": "Micron Technology",
+      "sector": "Silicon",
+      "price": 599.5,
+      "changePct": -15,
+      "marketCapB": 116,
+      "peRatio": 22.8,
+      "yoyRevGrowthPct": 84,
+      "aiExposureScore": 80,
+      "dataCenterRevSharePct": 46,
+      "grossMarginPct": 39.5,
+      "source": "live"
+    },
+    {
+      "symbol": "ARM",
+      "name": "Arm Holdings",
+      "sector": "Silicon",
+      "price": 160.65,
+      "changePct": -12.1,
+      "marketCapB": 153,
+      "peRatio": 82,
+      "yoyRevGrowthPct": 26,
+      "aiExposureScore": 78,
+      "dataCenterRevSharePct": 32,
+      "grossMarginPct": 96.4,
+      "source": "live"
+    },
+    {
+      "symbol": "MSFT",
+      "name": "Microsoft Corp",
+      "sector": "Hyperscaler",
+      "price": 490.88,
+      "changePct": -3.43,
+      "marketCapB": 3185,
+      "peRatio": 34.8,
+      "yoyRevGrowthPct": 16,
+      "aiExposureScore": 88,
+      "dataCenterRevSharePct": 44,
+      "grossMarginPct": 69.4,
+      "source": "live"
+    },
+    {
+      "symbol": "GOOGL",
+      "name": "Alphabet Inc",
+      "sector": "Hyperscaler",
+      "price": 272.43,
+      "changePct": -3.54,
+      "marketCapB": 2210,
+      "peRatio": 23.4,
+      "yoyRevGrowthPct": 15,
+      "aiExposureScore": 86,
+      "dataCenterRevSharePct": 18,
+      "grossMarginPct": 58.2,
+      "source": "live"
+    },
+    {
+      "symbol": "AMZN",
+      "name": "Amazon.com Inc",
+      "sector": "Hyperscaler",
+      "price": 244.94,
+      "changePct": -8.52,
+      "marketCapB": 2215,
+      "peRatio": 42.1,
+      "yoyRevGrowthPct": 11,
+      "aiExposureScore": 82,
+      "dataCenterRevSharePct": 19,
+      "grossMarginPct": 48.8,
+      "source": "live"
+    },
+    {
+      "symbol": "META",
+      "name": "Meta Platforms",
+      "sector": "Hyperscaler",
+      "price": 605.26,
+      "changePct": -1.8,
+      "marketCapB": 1495,
+      "peRatio": 27.9,
+      "yoyRevGrowthPct": 19,
+      "aiExposureScore": 85,
+      "dataCenterRevSharePct": null,
+      "grossMarginPct": 81.5,
+      "source": "live"
+    },
+    {
+      "symbol": "ORCL",
+      "name": "Oracle Corp",
+      "sector": "Hyperscaler",
+      "price": 104.09,
+      "changePct": -8.6,
+      "marketCapB": 518,
+      "peRatio": 43.6,
+      "yoyRevGrowthPct": 9,
+      "aiExposureScore": 81,
+      "dataCenterRevSharePct": 42,
+      "grossMarginPct": 71.2,
+      "source": "live"
+    },
+    {
+      "symbol": "PLTR",
+      "name": "Palantir Technologies",
+      "sector": "AI Platform",
+      "price": 163.9,
+      "changePct": 4.61,
+      "marketCapB": 156,
+      "peRatio": 198,
+      "yoyRevGrowthPct": 30,
+      "aiExposureScore": 95,
+      "dataCenterRevSharePct": null,
+      "grossMarginPct": 81.1,
+      "source": "live"
+    }
+  ],
+  "accelerators": [
+    {
+      "vendor": "NVIDIA",
+      "chip": "Blackwell B200 (SXM)",
+      "architecture": "Blackwell",
+      "processNode": "TSMC 4NP",
+      "fp8Tflops": 4500,
+      "fp4Tflops": 9000,
+      "hbmCapacityGB": 192,
+      "hbmBandwidthTBps": 8,
+      "tdpWatts": 1000,
+      "interconnect": "NVLink 5 (1.8 TB/s)",
+      "grossMarginEstPct": 75,
+      "estStreetPriceUsd": "$35,000 - $42,000"
+    },
+    {
+      "vendor": "NVIDIA",
+      "chip": "Rubin R200",
+      "architecture": "Rubin",
+      "processNode": "TSMC N3P",
+      "fp8Tflops": 12500,
+      "fp4Tflops": 25000,
+      "hbmCapacityGB": 288,
+      "hbmBandwidthTBps": 13,
+      "tdpWatts": 1400,
+      "interconnect": "NVLink 6 (3.6 TB/s)",
+      "grossMarginEstPct": 76,
+      "estStreetPriceUsd": "$45,000+ (Est.)"
+    },
+    {
+      "vendor": "AMD",
+      "chip": "Instinct MI325X",
+      "architecture": "CDNA 3",
+      "processNode": "TSMC 5nm/6nm",
+      "fp8Tflops": 2610,
+      "fp4Tflops": null,
+      "hbmCapacityGB": 256,
+      "hbmBandwidthTBps": 6,
+      "tdpWatts": 1000,
+      "interconnect": "Infinity Fabric (896 GB/s)",
+      "grossMarginEstPct": 54,
+      "estStreetPriceUsd": "$18,000 - $24,000"
+    },
+    {
+      "vendor": "AMD",
+      "chip": "Instinct MI355X",
+      "architecture": "CDNA 4",
+      "processNode": "TSMC N3P",
+      "fp8Tflops": 4600,
+      "fp4Tflops": 9200,
+      "hbmCapacityGB": 288,
+      "hbmBandwidthTBps": 8,
+      "tdpWatts": 1400,
+      "interconnect": "UALink / Infinity Fabric",
+      "grossMarginEstPct": 56,
+      "estStreetPriceUsd": "$25,000 - $32,000"
+    },
+    {
+      "vendor": "Google / Broadcom",
+      "chip": "TPU v6e (Trillium)",
+      "architecture": "TPU Systolic",
+      "processNode": "TSMC 5nm",
+      "fp8Tflops": 918,
+      "fp4Tflops": null,
+      "hbmCapacityGB": 32,
+      "hbmBandwidthTBps": 1.6,
+      "tdpWatts": 250,
+      "interconnect": "ICI Torus (400 GB/s)",
+      "grossMarginEstPct": 72,
+      "estStreetPriceUsd": "Internal Cloud Only"
+    },
+    {
+      "vendor": "Broadcom Custom ASIC",
+      "chip": "XPU CoWoS-S (OpenAI/Meta)",
+      "architecture": "Custom Matrix XPU",
+      "processNode": "TSMC N3E",
+      "fp8Tflops": 3400,
+      "fp4Tflops": 6800,
+      "hbmCapacityGB": 192,
+      "hbmBandwidthTBps": 7.2,
+      "tdpWatts": 850,
+      "interconnect": "Tomahawk 5 / UEC Ethernet",
+      "grossMarginEstPct": 68,
+      "estStreetPriceUsd": "Custom Co-Design"
+    },
+    {
+      "vendor": "AWS",
+      "chip": "Trainium2",
+      "architecture": "NeuronCore-v3",
+      "processNode": "TSMC 5nm",
+      "fp8Tflops": 1300,
+      "fp4Tflops": null,
+      "hbmCapacityGB": 96,
+      "hbmBandwidthTBps": 2.9,
+      "tdpWatts": 350,
+      "interconnect": "NeuronLink-v2",
+      "grossMarginEstPct": 65,
+      "estStreetPriceUsd": "Internal Cloud Only"
+    }
+  ],
+  "ipos": [
+    {
+      "company": "OpenAI",
+      "status": "IPO Filed / Rumored",
+      "valuationB": 300,
+      "arrRunRateB": 11.6,
+      "ipoTimeline": "Late 2026 / 2027 (Post-PBC)",
+      "keyBackers": "Microsoft, SoftBank, Thrive, NVIDIA"
+    },
+    {
+      "company": "Anthropic",
+      "status": "Private",
+      "valuationB": 183,
+      "arrRunRateB": 5.5,
+      "ipoTimeline": "2027+ Est.",
+      "keyBackers": "Amazon ($8B), Google ($3B), Lightspeed"
+    },
+    {
+      "company": "xAI",
+      "status": "Private",
+      "valuationB": 113,
+      "arrRunRateB": 1.8,
+      "ipoTimeline": "Private (Colossus)",
+      "keyBackers": "Valor, Sequoia, Fidelity, a16z"
+    },
+    {
+      "company": "Databricks",
+      "status": "IPO Filed / Rumored",
+      "valuationB": 62,
+      "arrRunRateB": 3.2,
+      "ipoTimeline": "2026 IPO Candidate",
+      "keyBackers": "Thrive, a16z, NVIDIA, T. Rowe"
+    },
+    {
+      "company": "Mistral AI",
+      "status": "Private",
+      "valuationB": 12,
+      "arrRunRateB": 0.35,
+      "ipoTimeline": "2027+ (EU Sovereign AI)",
+      "keyBackers": "General Catalyst, Lightspeed, Microsoft"
+    },
+    {
+      "company": "Cohere",
+      "status": "Private",
+      "valuationB": 5.5,
+      "arrRunRateB": 0.22,
+      "ipoTimeline": "2026/2027 Enterprise AI",
+      "keyBackers": "PSP Investments, NVIDIA, Oracle"
+    },
+    {
+      "company": "Perplexity",
+      "status": "Private",
+      "valuationB": 18,
+      "arrRunRateB": 0.28,
+      "ipoTimeline": "Private (Series D/E)",
+      "keyBackers": "IVP, SoftBank, NVIDIA, Jeff Bezos"
+    }
+  ],
+  "dossiers": [
+    {
+      "id": "dossier-google",
+      "name": "Google DeepMind",
+      "type": "Frontier Lab",
+      "hq": "London / Mountain View",
+      "leadership": "Demis Hassabis (CEO), Jeff Dean (Chief Scientist)",
+      "totalFundingB": 0,
+      "valuationB": 2210,
+      "arrRunRateB": 14.5,
+      "ipoStatus": "Public (GOOGL)",
+      "computeCluster": "1.5M+ TPU v5p / Trillium v6e / Ironwood Pods",
+      "acceleratorMix": "90% Custom TPU + 10% NVIDIA B200",
+      "focusAreas": [
+        "Gemini 4 Series",
+        "Gemma Open-Weight",
+        "AlphaFold / Science"
+      ],
+      "flagshipFamilies": [
+        "Google",
+        "Google Gemma"
+      ]
+    },
+    {
+      "id": "dossier-openai",
+      "name": "OpenAI",
+      "type": "Frontier Lab",
+      "hq": "San Francisco, CA",
+      "leadership": "Sam Altman (CEO), Mark Chen (CRO)",
+      "totalFundingB": 58,
+      "valuationB": 300,
+      "arrRunRateB": 11.6,
+      "ipoStatus": "IPO Candidate (2026/27)",
+      "computeCluster": "1.2M+ H100/B200 Eq. (Azure + Stargate)",
+      "acceleratorMix": "NVIDIA H100/B200 + Broadcom Custom XPU",
+      "focusAreas": [
+        "GPT-6 Series",
+        "RL Reasoning (o-series)",
+        "Codex / Agents"
+      ],
+      "flagshipFamilies": [
+        "OpenAI"
+      ]
+    },
+    {
+      "id": "dossier-anthropic",
+      "name": "Anthropic",
+      "type": "Frontier Lab",
+      "hq": "San Francisco, CA",
+      "leadership": "Dario Amodei (CEO), Daniela Amodei (Pres.)",
+      "totalFundingB": 27.3,
+      "valuationB": 183,
+      "arrRunRateB": 5.5,
+      "ipoStatus": "Private (PBC)",
+      "computeCluster": "850K+ Trainium2 / TPU v6e / H100 Eq.",
+      "acceleratorMix": "AWS Trainium2 + Google TPU + NVIDIA",
+      "focusAreas": [
+        "Claude 5.5 / Fable",
+        "Agentic Coding",
+        "Constitutional AI"
+      ],
+      "flagshipFamilies": [
+        "Anthropic"
+      ]
+    },
+    {
+      "id": "dossier-deepseek",
+      "name": "DeepSeek",
+      "type": "Open-Weight Lab",
+      "hq": "Hangzhou, China",
+      "leadership": "Liang Wenfeng (Founder & CEO)",
+      "totalFundingB": 0.5,
+      "valuationB": 25,
+      "arrRunRateB": 0.4,
+      "ipoStatus": "Private (High-Flyer Backed)",
+      "computeCluster": "65K+ H800 / Ascend 910C Eq.",
+      "acceleratorMix": "FP8 Sparse MoE Optimization",
+      "focusAreas": [
+        "Ultra-Low-Cost MoE",
+        "Open-Weight RL",
+        "DeepSeek V4"
+      ],
+      "flagshipFamilies": [
+        "DeepSeek"
+      ]
+    },
+    {
+      "id": "dossier-meta",
+      "name": "Meta Superintelligence / FAIR",
+      "type": "Open-Weight Lab",
+      "hq": "Menlo Park, CA",
+      "leadership": "Mark Zuckerberg (CEO), Yann LeCun (Chief AI)",
+      "totalFundingB": 0,
+      "valuationB": 1495,
+      "arrRunRateB": 8.2,
+      "ipoStatus": "Public (META)",
+      "computeCluster": "900K+ H100 / B200 Eq. (Grand Teton)",
+      "acceleratorMix": "NVIDIA H100/B200 + Meta MTIA",
+      "focusAreas": [
+        "Llama 4 / Muse",
+        "10M Long Context",
+        "Open Weights"
+      ],
+      "flagshipFamilies": [
+        "Meta Llama"
+      ]
+    },
+    {
+      "id": "dossier-qwen",
+      "name": "Alibaba Qwen Team",
+      "type": "Open-Weight Lab",
+      "hq": "Hangzhou / Singapore",
+      "leadership": "Lin Junyang (Tech Lead)",
+      "totalFundingB": 0,
+      "valuationB": 210,
+      "arrRunRateB": 3.1,
+      "ipoStatus": "Public (BABA)",
+      "computeCluster": "300K+ H800 / Custom Pai-Lingjun",
+      "acceleratorMix": "NVIDIA + Alibaba Cloud Clusters",
+      "focusAreas": [
+        "Qwen4-Max",
+        "Open-Weight Coding",
+        "Multimodal"
+      ],
+      "flagshipFamilies": [
+        "Qwen"
+      ]
+    },
+    {
+      "id": "dossier-xai",
+      "name": "xAI",
+      "type": "Frontier Lab",
+      "hq": "Memphis, TN / Palo Alto",
+      "leadership": "Elon Musk (Founder)",
+      "totalFundingB": 18,
+      "valuationB": 113,
+      "arrRunRateB": 1.8,
+      "ipoStatus": "Private",
+      "computeCluster": "500K+ H100/B200 (Colossus Supercluster)",
+      "acceleratorMix": "100% NVIDIA InfiniBand / Spectrum-X",
+      "focusAreas": [
+        "Grok 4.7",
+        "Real-Time X Data",
+        "Robotics / FSD"
+      ],
+      "flagshipFamilies": [
+        "xAI"
+      ]
+    },
+    {
+      "id": "dossier-nvidia",
+      "name": "NVIDIA Corp",
+      "type": "Silicon & Foundry",
+      "hq": "Santa Clara, CA",
+      "leadership": "Jensen Huang (CEO)",
+      "totalFundingB": 0,
+      "valuationB": 3490,
+      "arrRunRateB": 148,
+      "ipoStatus": "Public (NVDA)",
+      "computeCluster": "Eos / Selene SuperPODs",
+      "acceleratorMix": "Blackwell B200 / Rubin R200 / NVLink",
+      "focusAreas": [
+        "CUDA / NVFP4",
+        "Nemotron 3.5",
+        "Full-Stack AI"
+      ],
+      "flagshipFamilies": [
+        "NVIDIA Nemotron"
+      ]
+    }
+  ],
+  "news": [
+    {
+      "id": "techcrunch-ai-T3BlbkFJIHNh",
+      "title": "OpenAI says heavy ChatGPT users may hit limits sooner as it merges Chat and Work",
+      "source": "TechCrunch AI",
+      "category": "MODELS",
+      "publishedAt": "2026-11-25T20:03:27.000Z",
+      "url": "https://techcrunch.com/2026/11/25/openai-says-heavy-chatgpt-users-may-hit-limits-sooner-as-it-merges-chat-and-work/",
+      "summary": "OpenAI will introduce a single usage meter across ChatGPT as it combines the Chat and Work experiences."
+    },
+    {
+      "id": "techcrunch-ai-SmVuc2VuIEh1",
+      "title": "Jensen Huang broke Nvidia&#8217;s code of conduct, and his employees may not forget it",
+      "source": "TechCrunch AI",
+      "category": "SILICON",
+      "publishedAt": "2026-11-25T19:54:57.000Z",
+      "url": "https://techcrunch.com/2026/11/25/jensen-huang-broke-nvidias-code-of-conduct-and-his-employees-may-not-forget-it/",
+      "summary": "Most codes of conduct serve as a reflection of corporate culture. In Nvidia's case, that could have consequences."
+    },
+    {
+      "id": "techcrunch-ai-QW50aHJvcGlj",
+      "title": "Anthropic’s Dario Amodei calls accusations of surrendering human control to AI ‘absurd’",
+      "source": "TechCrunch AI",
+      "category": "MARKETS & IPOS",
+      "publishedAt": "2026-11-25T19:44:24.000Z",
+      "url": "https://techcrunch.com/2026/11/25/anthropics-dario-amodei-calls-accusations-of-surrendering-human-control-to-ai-absurd/",
+      "summary": "Anthropic CEO Dario Amodei pushes back against rivals’ accusations that he favors surrendering human agency to AI, even as leading AI companies increasingly automate their own research and model development."
+    },
+    {
+      "id": "hugging-face-blog-V2hlcmUgc2Np",
+      "title": "Where scientists draw the line on AI agents",
+      "source": "Hugging Face Blog",
+      "category": "MODELS",
+      "publishedAt": "2026-11-25T18:52:55.000Z",
+      "url": "https://huggingface.co/blog/allenai/where-scientists-draw-the-line-on-ai-agents",
+      "summary": ""
+    },
+    {
+      "id": "ars-technica-QmFja2JsYXpl",
+      "title": "Backblaze explains why it&#039;s sharing customer information with advertisers",
+      "source": "Ars Technica",
+      "category": "SILICON",
+      "publishedAt": "2026-11-25T18:38:29.000Z",
+      "url": "https://arstechnica.com/information-technology/2026/11/backblaze-explains-why-its-sharing-customer-information-with-advertisers/",
+      "summary": "Backblaze tells Ars it won't share users' backup, storage files with advertisers."
+    },
+    {
+      "id": "techcrunch-ai-V2FudCB0byBi",
+      "title": "Want to buy your kid an AI toy this Christmas? Not in New York",
+      "source": "TechCrunch AI",
+      "category": "MARKETS & IPOS",
+      "publishedAt": "2026-11-25T18:11:46.000Z",
+      "url": "https://techcrunch.com/2026/11/25/want-to-buy-your-kid-an-ai-toy-this-christmas-not-in-new-york/",
+      "summary": "New York has banned AI chatbot toys for five years as new research from Common Sense Media reveals troubling safety failures, including exposure to inappropriate content and risks to emotional development."
+    },
+    {
+      "id": "techcrunch-ai-Q2hhcmFjdGVy",
+      "title": "Character.AI’s plan to auction off users’ private chats challenged by state AGs",
+      "source": "TechCrunch AI",
+      "category": "MARKETS & IPOS",
+      "publishedAt": "2026-11-25T17:35:58.000Z",
+      "url": "https://techcrunch.com/2026/11/25/state-ags-fight-character-ais-plan-to-auction-off-users-private-chats/",
+      "summary": "The proposed Character.ai bankruptcy sale includes sensitive personal data from more than 21 million U.S. accounts, including 2.1 million registered to minors, the state AGs said."
+    },
+    {
+      "id": "techcrunch-ai-QUkgZGF0YSBj",
+      "title": "AI data centers are becoming harder to build, and neoclouds are feeling it",
+      "source": "TechCrunch AI",
+      "category": "MARKETS & IPOS",
+      "publishedAt": "2026-11-25T15:41:43.000Z",
+      "url": "https://techcrunch.com/podcast/ai-data-centers-are-becoming-harder-to-build-and-neoclouds-are-feeling-it/",
+      "summary": "⁠Nvidia has made clear⁠ it won&#8217;t backstop an AI data center until it&#8217;s nearly ready to run, and that&#8217;s landing just as neoclouds report construction delays and more expensive debt. The message to develo"
+    },
+    {
+      "id": "hugging-face-blog-QW4gSW5kaWMg",
+      "title": "An Indic Voice Agent with CUGA",
+      "source": "Hugging Face Blog",
+      "category": "MODELS",
+      "publishedAt": "2026-11-25T10:22:09.000Z",
+      "url": "https://huggingface.co/blog/ibm-research/an-indic-voice-agent-with-cuga",
+      "summary": ""
+    },
+    {
+      "id": "hugging-face-blog-SGlsbC1jbGlt",
+      "title": "Hill-climbing Inkling 2 Mini inference on one RTX PRO 6000",
+      "source": "Hugging Face Blog",
+      "category": "MODELS",
+      "publishedAt": "2026-11-25T00:00:00.000Z",
+      "url": "https://huggingface.co/blog/inkling-2-mini-inference-hillclimb",
+      "summary": ""
+    },
+    {
+      "id": "hugging-face-blog-TWljcm9kdWNr",
+      "title": "Microduck Obstacle Avoidance: A Sim2Real Workflow with Isaac Lab and Newton",
+      "source": "Hugging Face Blog",
+      "category": "MODELS",
+      "publishedAt": "2026-11-24T16:34:13.000Z",
+      "url": "https://huggingface.co/blog/nvidia/microduck-obstacle-avoidance",
+      "summary": ""
+    },
+    {
+      "id": "ars-technica-QW1hem9uIHNh",
+      "title": "Amazon says hackers&#039; AI agents found and exploited 0-day with little human input",
+      "source": "Ars Technica",
+      "category": "SILICON",
+      "publishedAt": "2026-11-24T12:30:05.000Z",
+      "url": "https://arstechnica.com/security/2026/11/amazon-says-hackers-ai-agents-found-and-exploited-0-day-with-little-human-input/",
+      "summary": "The Cairn AI framework is proving to be a boon for defenders and attackers."
+    },
+    {
+      "id": "hugging-face-blog-SG93IHRvIGJ1",
+      "title": "How to build and maintain an agentic evaluation",
+      "source": "Hugging Face Blog",
+      "category": "BENCHMARKS",
+      "publishedAt": "2026-11-23T00:00:00.000Z",
+      "url": "https://huggingface.co/blog/agentic-evals",
+      "summary": ""
+    },
+    {
+      "id": "ars-technica-UmVzZWFyY2hl",
+      "title": "Researcher plants 2m canaries into the AI supply chain. A privacy disaster surfaced.",
+      "source": "Ars Technica",
+      "category": "SILICON",
+      "publishedAt": "2026-11-20T20:59:08.000Z",
+      "url": "https://arstechnica.com/security/2026/11/a-leaky-ai-supply-chain-is-exposing-secret-user-data-at-an-alarming-rate/",
+      "summary": "Test using prompts with unique, trackable secrets proves that data doesn't stay private."
+    },
+    {
+      "id": "hugging-face-blog-V2VsY29tZSBJ",
+      "title": "Welcome Inkling 2 Mini, Cutting-edge Performance for your Local Setup",
+      "source": "Hugging Face Blog",
+      "category": "MODELS",
+      "publishedAt": "2026-11-20T00:00:00.000Z",
+      "url": "https://huggingface.co/blog/inkling2mini",
+      "summary": ""
+    },
+    {
+      "id": "ars-technica-TWFuIGhpcmVk",
+      "title": "Man hired by Russia spied on Silicon Valley tech and defense company, feds say",
+      "source": "Ars Technica",
+      "category": "SILICON",
+      "publishedAt": "2026-11-19T20:29:46.000Z",
+      "url": "https://arstechnica.com/security/2026/11/man-charged-with-spying-on-silicon-valley-tech-and-defense-company-for-russia/",
+      "summary": "25-year-old accused of stalking employees at coffee shop and in an \"aggressive\" car pursuit."
+    },
+    {
+      "id": "ars-technica-SG93IHRvIHRl",
+      "title": "How to tell a cyberattack from a plain old outage",
+      "source": "Ars Technica",
+      "category": "SILICON",
+      "publishedAt": "2026-11-19T11:13:01.000Z",
+      "url": "https://arstechnica.com/security/2026/11/how-to-tell-a-cyberattack-from-a-plain-old-outage/",
+      "summary": "When everything goes down, don’t assume it’s a cyberattack."
+    },
+    {
+      "id": "ars-technica-SHVuZHJlZHMg",
+      "title": "Hundreds of websites deliver potent malware cocktail to unsuspecting visitors",
+      "source": "Ars Technica",
+      "category": "SILICON",
+      "publishedAt": "2026-11-17T22:32:16.000Z",
+      "url": "https://arstechnica.com/security/2026/11/malicious-code-delivered-through-optimizely-hits-visitors-to-hundreds-of-sites/",
+      "summary": "Malware cocktail delivers cryptocurrency theft payloads and iOS exploits, among other things."
+    }
+  ]
+}

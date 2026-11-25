@@ -1,0 +1,180 @@
+{
+  "lastSynced": "2026-11-25T20:52:49.224Z",
+  "supplyChain": {
+    "dramWaferSharePct": 70,
+    "dramSsdYoySpikePct": 130,
+    "pcBomInflationPct": 17,
+    "ltaBookedThrough": "2027–2029 (Samsung / SK Hynix LTAs)",
+    "inflationQuarterly": [
+      {
+        "quarter": "2024 Q1",
+        "ddr5DramIndex": 100,
+        "nandSsdIndex": 100,
+        "gpuSpotIndex": 100,
+        "aiCapexIndex": 100
+      },
+      {
+        "quarter": "2024 Q3",
+        "ddr5DramIndex": 118,
+        "nandSsdIndex": 124,
+        "gpuSpotIndex": 112,
+        "aiCapexIndex": 138
+      },
+      {
+        "quarter": "2025 Q1",
+        "ddr5DramIndex": 142,
+        "nandSsdIndex": 151,
+        "gpuSpotIndex": 128,
+        "aiCapexIndex": 186
+      },
+      {
+        "quarter": "2025 Q3",
+        "ddr5DramIndex": 179,
+        "nandSsdIndex": 184,
+        "gpuSpotIndex": 146,
+        "aiCapexIndex": 235
+      },
+      {
+        "quarter": "2026 Q1",
+        "ddr5DramIndex": 214,
+        "nandSsdIndex": 219,
+        "gpuSpotIndex": 164,
+        "aiCapexIndex": 292
+      },
+      {
+        "quarter": "2026 Q3",
+        "ddr5DramIndex": 230,
+        "nandSsdIndex": 232,
+        "gpuSpotIndex": 172,
+        "aiCapexIndex": 329
+      }
+    ],
+    "gpuPricing": [
+      {
+        "model": "RTX 3070 Ti (8GB)",
+        "tier": "Consumer / Workstation",
+        "vramGB": 8,
+        "msrpUsd": 599,
+        "spotStreetUsd": 420,
+        "cloudHourlyUsd": 0.22,
+        "leadTimeWeeks": "In Stock (Used)"
+      },
+      {
+        "model": "RX 7900 XTX (24GB)",
+        "tier": "Consumer / Workstation",
+        "vramGB": 24,
+        "msrpUsd": 999,
+        "spotStreetUsd": 1049,
+        "cloudHourlyUsd": 0.45,
+        "leadTimeWeeks": "1–2 wks"
+      },
+      {
+        "model": "RTX 4090 (24GB)",
+        "tier": "Consumer / Workstation",
+        "vramGB": 24,
+        "msrpUsd": 1599,
+        "spotStreetUsd": 2150,
+        "cloudHourlyUsd": 0.69,
+        "leadTimeWeeks": "2–4 wks"
+      },
+      {
+        "model": "RTX 5090 (32GB)",
+        "tier": "Consumer / Workstation",
+        "vramGB": 32,
+        "msrpUsd": 1999,
+        "spotStreetUsd": 2890,
+        "cloudHourlyUsd": 1.05,
+        "leadTimeWeeks": "6–10 wks"
+      },
+      {
+        "model": "NVIDIA H100 (80GB SXM)",
+        "tier": "Data Center",
+        "vramGB": 80,
+        "msrpUsd": 30000,
+        "spotStreetUsd": 31500,
+        "cloudHourlyUsd": 2.35,
+        "leadTimeWeeks": "8–14 wks"
+      },
+      {
+        "model": "NVIDIA H200 (141GB HBM3e)",
+        "tier": "Data Center",
+        "vramGB": 141,
+        "msrpUsd": 36000,
+        "spotStreetUsd": 39500,
+        "cloudHourlyUsd": 3.4,
+        "leadTimeWeeks": "12–18 wks"
+      },
+      {
+        "model": "NVIDIA B200 (192GB HBM3e)",
+        "tier": "Data Center",
+        "vramGB": 192,
+        "msrpUsd": 40000,
+        "spotStreetUsd": 45000,
+        "cloudHourlyUsd": 4.95,
+        "leadTimeWeeks": "18–28 wks"
+      },
+      {
+        "model": "AMD Instinct MI325X (256GB)",
+        "tier": "Data Center",
+        "vramGB": 256,
+        "msrpUsd": 22000,
+        "spotStreetUsd": 23500,
+        "cloudHourlyUsd": 2.85,
+        "leadTimeWeeks": "10–16 wks"
+      }
+    ]
+  },
+  "powerAndWater": {
+    "globalPowerTwh2026": 485,
+    "globalPowerTwh2030Est": 950,
+    "usAiHubsTwhRange": "68–99 TWh (N. Virginia, Texas, Ohio, Oregon)",
+    "indirectWaterLitersPerKwh": 4.5,
+    "directCoolingLitersPerKwhEvap": 1.8,
+    "directCoolingLitersPerKwhClosed": 0.15,
+    "monthlyInference25UsdGal": 1.9,
+    "relatableComparisons": [
+      {
+        "label": "$25/mo LLM Inference (approx. 3,000 prompts)",
+        "waterGal": "1.9 gal",
+        "energyKwh": "1.4 kWh"
+      },
+      {
+        "label": "10-Minute Residential Shower",
+        "waterGal": "20.0 gal",
+        "energyKwh": "2.1 kWh"
+      },
+      {
+        "label": "1x 1080p Streaming Movie (2 hrs)",
+        "waterGal": "0.3 gal",
+        "energyKwh": "0.2 kWh"
+      },
+      {
+        "label": "1x Household Dishwasher Cycle",
+        "waterGal": "4.0 gal",
+        "energyKwh": "1.5 kWh"
+      }
+    ],
+    "efficiencyCurve": [
+      {
+        "year": "2023",
+        "whPerMedianPrompt": 4.6,
+        "reasoningComputeVolumeIndex": 100
+      },
+      {
+        "year": "2024",
+        "whPerMedianPrompt": 1.2,
+        "reasoningComputeVolumeIndex": 280
+      },
+      {
+        "year": "2025",
+        "whPerMedianPrompt": 0.34,
+        "reasoningComputeVolumeIndex": 740
+      },
+      {
+        "year": "2026",
+        "whPerMedianPrompt": 0.14,
+        "reasoningComputeVolumeIndex": 1620
+      }
+    ]
+  }
+}
