@@ -16,7 +16,6 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Radio,
-  RefreshCw,
   Search,
   Sun,
   TrendingUp,
@@ -163,7 +162,6 @@ export default function App() {
   });
 
   const [loading, setLoading] = useState(true);
-  const [syncing, setSyncing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const [search, setSearch] = useState('');
@@ -240,29 +238,6 @@ export default function App() {
   useEffect(() => {
     fetchAll();
   }, [fetchAll]);
-
-  const handleManualSync = async () => {
-    setSyncing(true);
-    setError(null);
-    try {
-      const res = await fetch('/api/sync', { method: 'POST' });
-      if (!res.ok) throw new Error(`Sync failed: HTTP ${res.status}`);
-      const payload = (await res.json()) as {
-        modelsDb: ModelsDatabase;
-        marketDb: MarketDatabase;
-        profitabilityDb: ProfitabilityDatabase;
-        impactDb: ImpactDatabase;
-      };
-      setDb(payload.modelsDb);
-      setMarket(payload.marketDb);
-      setProfitability(payload.profitabilityDb);
-      setImpact(payload.impactDb);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Sync request failed');
-    } finally {
-      setSyncing(false);
-    }
-  };
 
   const handleClearLocalData = () => {
     setCustomModels([]);
@@ -604,17 +579,6 @@ export default function App() {
               <div className="tabular-mono hidden items-center rounded border border-[var(--border-hairline)] bg-[var(--bg-sub)] px-2.5 py-1.5 text-[10px] text-[var(--text-secondary)] lg:flex">
                 SYNCED: {db ? formatTimestamp(db.lastSynced) : 'LOADING...'}
               </div>
-
-              <button
-                type="button"
-                onClick={handleManualSync}
-                disabled={syncing}
-                aria-label="Sync upstream data feeds"
-                className="tabular-mono inline-flex items-center gap-1.5 rounded border border-[var(--border-strong)] bg-[var(--bg-elevated)] px-2.5 py-1.5 text-[11px] font-medium text-[var(--text-primary)] hover:opacity-85 disabled:opacity-50"
-              >
-                <RefreshCw className={`h-3 w-3 ${syncing ? 'animate-spin' : ''}`} />
-                <span>{syncing ? 'SYNCING' : 'SYNC'}</span>
-              </button>
 
               <button
                 type="button"
