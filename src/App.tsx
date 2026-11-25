@@ -384,7 +384,11 @@ export default function App() {
             {!sidebarCollapsed ? (
               <div>
                 <div className="flex items-center justify-between gap-2">
-                  <img src="/banner-trans.png" alt="Graphinity Lab" className="h-6 w-auto max-w-[165px] object-contain" />
+                  <img
+                    src="/banner-trans.png"
+                    alt="Graphinity Lab"
+                    className={`h-6 w-auto max-w-[165px] object-contain transition-[filter] duration-150 ${theme === 'light' ? 'brightness-0' : ''}`}
+                  />
                   <button
                     type="button"
                     onClick={() => setSidebarCollapsed((v) => !v)}
@@ -409,7 +413,11 @@ export default function App() {
               </div>
             ) : (
               <div className="flex flex-col items-center gap-2">
-                <img src="/favicon.png" alt="AI Index" className="h-6 w-6 rounded object-contain" />
+                <img
+                  src="/favicon.png"
+                  alt="AI Index"
+                  className={`h-6 w-6 rounded object-contain transition-[filter] duration-150 ${theme === 'light' ? 'brightness-0' : ''}`}
+                />
                 <button
                   type="button"
                   onClick={() => setSidebarCollapsed((v) => !v)}
@@ -476,7 +484,11 @@ export default function App() {
             <div>
               <div className="mb-4 flex items-center justify-between border-b border-[var(--border-hairline)] pb-3">
                 <div className="flex items-center gap-2">
-                  <img src="/banner-trans.png" alt="Graphinity Lab" className="h-5 w-auto object-contain" />
+                  <img
+                    src="/banner-trans.png"
+                    alt="Graphinity Lab"
+                    className={`h-5 w-auto object-contain transition-[filter] duration-150 ${theme === 'light' ? 'brightness-0' : ''}`}
+                  />
                   <span className="tabular-mono text-xs font-bold text-[var(--text-primary)]">AI INDEX</span>
                 </div>
                 <button type="button" aria-label="Close navigation menu" onClick={() => setMobileMenuOpen(false)} className="text-[var(--text-secondary)]">
@@ -561,7 +573,11 @@ export default function App() {
               >
                 <Menu className="h-4 w-4" />
               </button>
-              <img src="/banner-trans.png" alt="Graphinity Lab" className="h-6 w-auto object-contain" />
+              <img
+                src="/banner-trans.png"
+                alt="Graphinity Lab"
+                className={`h-6 w-auto object-contain transition-[filter] duration-150 ${theme === 'light' ? 'brightness-0' : ''}`}
+              />
               <span className="tabular-mono text-xs font-bold text-[var(--text-primary)]">AI INDEX</span>
             </div>
 
