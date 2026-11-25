@@ -2,14 +2,24 @@ import React, { useState } from 'react';
 import { ArrowRight, DollarSign, Flame, TrendingUp } from 'lucide-react';
 import { CustomSlider } from './CustomControls.tsx';
 import { SourceBadge } from './SourceBadge.tsx';
+import { ComputeCapitalFlowDiagram, DeltaBadge, Sparkline } from './TelemetryVisuals.tsx';
 import type { ProfitabilityDatabase } from '../types.ts';
 
 interface ProfitabilityLedgerProps {
   data: ProfitabilityDatabase | null;
+  openWeightCount?: number;
+  closedWeightCount?: number;
+  dramSharePct?: number;
   onNavigateSources?: () => void;
 }
 
-export const ProfitabilityLedger: React.FC<ProfitabilityLedgerProps> = ({ data, onNavigateSources }) => {
+export const ProfitabilityLedger: React.FC<ProfitabilityLedgerProps> = ({
+  data,
+  openWeightCount = 142,
+  closedWeightCount = 111,
+  dramSharePct = 70,
+  onNavigateSources,
+}) => {
   const [simInfraB, setSimInfraB] = useState(520);
   const [simSoftwareB, setSimSoftwareB] = useState(98);
 
@@ -47,12 +57,24 @@ export const ProfitabilityLedger: React.FC<ProfitabilityLedgerProps> = ({ data, 
           </div>
 
           <div className="rounded border border-[var(--border-hairline)] bg-[var(--bg-sub)] p-4">
-            <div className="text-[11px] font-semibold text-[#D97706] uppercase">CapEx-to-Revenue Deficit Gauge</div>
-            <div className="tabular-mono mt-1.5 flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-[var(--text-primary)]">${data.annualCapexRunRateB}B</span>
-              <span className="text-xs text-[var(--text-secondary)]">spent vs.</span>
-              <span className="text-xl font-bold text-[#059669]">${data.annualRealizedSoftwareRevB}B</span>
-              <span className="text-xs text-[var(--text-secondary)]">earned</span>
+            <div className="flex items-center justify-between gap-2">
+              <div className="text-[11px] font-semibold text-[#D97706] uppercase">CapEx-to-Revenue Deficit Gauge</div>
+              <DeltaBadge value={-((data.annualCapexRunRateB - data.annualRealizedSoftwareRevB) / Math.max(1, data.annualCapexRunRateB)) * 100} decimals={0} />
+            </div>
+            <div className="tabular-mono mt-1.5 flex items-center justify-between gap-2">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold text-[var(--text-primary)]">${data.annualCapexRunRateB}B</span>
+                <span className="text-xs text-[var(--text-secondary)]">spent vs.</span>
+                <span className="text-xl font-bold text-[#059669]">${data.annualRealizedSoftwareRevB}B</span>
+                <span className="text-xs text-[var(--text-secondary)]">earned</span>
+              </div>
+              <Sparkline
+                values={data.yearlyLedger.map((y) => y.hyperscalerCapexB - y.modelAppRevenueB)}
+                tone="negative"
+                width={74}
+                height={22}
+                ariaLabel="Annual CapEx-to-revenue gap trend"
+              />
             </div>
             <div className="mt-2 h-2 w-full overflow-hidden rounded bg-[var(--bg-elevated)]">
               <div
@@ -67,6 +89,15 @@ export const ProfitabilityLedger: React.FC<ProfitabilityLedgerProps> = ({ data, 
           </div>
         </div>
       </section>
+
+      <ComputeCapitalFlowDiagram
+        capexB={data.annualCapexRunRateB}
+        softwareRevB={data.annualRealizedSoftwareRevB}
+        ratio={data.infraToSoftwareRatio}
+        dramSharePct={dramSharePct}
+        openWeightCount={openWeightCount}
+        closedWeightCount={closedWeightCount}
+      />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <section className="rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-surface)] p-4 lg:col-span-2">

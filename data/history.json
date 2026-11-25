@@ -1,0 +1,30 @@
+{
+  "lastSynced": "2026-11-25T21:26:52.615Z",
+  "snapshots": [
+    {
+      "timestamp": "2026-11-25T21:26:52.615Z",
+      "totalModels": 293,
+      "openWeightCount": 157,
+      "avgFrontierIQ": 94.7,
+      "avgBlendedCost1M": 2.53,
+      "capexRunRateB": 520,
+      "realizedRevB": 98,
+      "dramSsdYoySpikePct": 130,
+      "tickerPrices": {
+        "NVDA": 149.3,
+        "AMD": 406.03,
+        "AVGO": 300.86,
+        "TSM": 342.34,
+        "ASML": 1303.08,
+        "MU": 601.25,
+        "ARM": 161.51,
+        "MSFT": 489.93,
+        "GOOGL": 273.1,
+        "AMZN": 244.43,
+        "META": 609.89,
+        "ORCL": 103.88,
+        "PLTR": 163.59
+      }
+    }
+  ]
+}

@@ -5,6 +5,8 @@ import express from 'express';
 import cors from 'cors';
 import cron from 'node-cron';
 import type {
+  HistoryDatabase,
+  HistorySnapshot,
   ImpactDatabase,
   MarketDatabase,
   MarketTicker,
@@ -33,6 +35,7 @@ const MODELS_PATH = path.join(DATA_DIR, 'models.json');
 const MARKET_PATH = path.join(DATA_DIR, 'market.json');
 const PROFITABILITY_PATH = path.join(DATA_DIR, 'profitability.json');
 const IMPACT_PATH = path.join(DATA_DIR, 'impact.json');
+const HISTORY_PATH = path.join(DATA_DIR, 'history.json');
 const PORT = Number(process.env.PORT ?? 3001);
 
 interface OpenRouterModel {
@@ -127,9 +130,14 @@ function computeIntelPerParam(score: number | null, activeB: number): number | n
 
 async function writeJsonAtomic(filePath: string, data: unknown): Promise<void> {
   await fs.mkdir(path.dirname(filePath), { recursive: true });
-  const tmp = `${filePath}.tmp`;
-  await fs.writeFile(tmp, JSON.stringify(data, null, 2) + '\n', 'utf-8');
-  await fs.rename(tmp, filePath);
+  const tmp = `${filePath}.${process.pid}.${Date.now()}.tmp`;
+  try {
+    await fs.writeFile(tmp, JSON.stringify(data, null, 2) + '\n', 'utf-8');
+    await fs.rename(tmp, filePath);
+  } catch (err) {
+    await fs.unlink(tmp).catch(() => {});
+    throw err;
+  }
 }
 
 async function readJsonOrNull<T>(filePath: string): Promise<T | null> {
@@ -140,12 +148,74 @@ async function readJsonOrNull<T>(filePath: string): Promise<T | null> {
   }
 }
 
+async function fetchWithRetry(
+  url: string,
+  init: RequestInit = {},
+  opts: { retries?: number; timeoutMs?: number; backoffMs?: number } = {},
+): Promise<Response> {
+  const { retries = 2, timeoutMs = 10000, backoffMs = 500 } = opts;
+  let lastErr: unknown;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const res = await fetch(url, { ...init, signal: AbortSignal.timeout(timeoutMs) });
+      if (res.ok || res.status < 500 || attempt === retries) return res;
+      lastErr = new Error(`HTTP ${res.status}`);
+    } catch (err) {
+      lastErr = err;
+      if (attempt === retries) throw err;
+    }
+    await new Promise((resolve) => setTimeout(resolve, backoffMs * Math.pow(2, attempt)));
+  }
+  throw lastErr;
+}
+
+const KNOWN_ORG_LABELS: Record<string, { family: string; defaultWeight: WeightClass; defaultLicense: string }> = {
+  nvidia: { family: 'NVIDIA', defaultWeight: 'open-weight', defaultLicense: 'NVIDIA Open' },
+  microsoft: { family: 'Microsoft', defaultWeight: 'open-weight', defaultLicense: 'MIT' },
+  allenai: { family: 'AllenAI', defaultWeight: 'open-weight', defaultLicense: 'Apache 2.0' },
+  cohere: { family: 'Cohere', defaultWeight: 'closed-weight', defaultLicense: 'Cohere Commercial' },
+  perplexity: { family: 'Perplexity', defaultWeight: 'closed-weight', defaultLicense: 'Proprietary' },
+  amazon: { family: 'Amazon', defaultWeight: 'closed-weight', defaultLicense: 'Proprietary' },
+  ibm: { family: 'IBM Granite', defaultWeight: 'open-weight', defaultLicense: 'Apache 2.0' },
+  'ibm-granite': { family: 'IBM Granite', defaultWeight: 'open-weight', defaultLicense: 'Apache 2.0' },
+  bytedance: { family: 'ByteDance', defaultWeight: 'open-weight', defaultLicense: 'Apache 2.0' },
+  'bytedance-seed': { family: 'ByteDance', defaultWeight: 'open-weight', defaultLicense: 'Apache 2.0' },
+  nousresearch: { family: 'Nous Research', defaultWeight: 'open-weight', defaultLicense: 'Apache 2.0' },
+  'z-ai': { family: 'Zhipu GLM', defaultWeight: 'open-weight', defaultLicense: 'MIT' },
+  thudm: { family: 'Zhipu GLM', defaultWeight: 'open-weight', defaultLicense: 'GLM License' },
+  minimax: { family: 'MiniMax', defaultWeight: 'closed-weight', defaultLicense: 'Proprietary' },
+  stepfun: { family: 'StepFun', defaultWeight: 'open-weight', defaultLicense: 'Apache 2.0' },
+  xiaomi: { family: 'Xiaomi', defaultWeight: 'open-weight', defaultLicense: 'MIT' },
+  baidu: { family: 'Baidu ERNIE', defaultWeight: 'open-weight', defaultLicense: 'Apache 2.0' },
+};
+
+function inferAutoFamily(orId: string, name: string): { family: string; weightClass: WeightClass; license: string } {
+  const prefix = (orId.split('/')[0] ?? 'community').toLowerCase();
+  const known = KNOWN_ORG_LABELS[prefix];
+  if (known) {
+    return { family: known.family, weightClass: known.defaultWeight, license: known.defaultLicense };
+  }
+  const lower = `${orId} ${name}`.toLowerCase();
+  const isLikelyOpen = /(llama|qwen|mistral|deepseek|gemma|phi|olmo|nemotron|granite|yi-|hermes|open|oss)/.test(lower);
+  const formatted = prefix
+    .split(/[-_]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+  return {
+    family: formatted || 'Community',
+    weightClass: isLikelyOpen ? 'open-weight' : 'closed-weight',
+    license: isLikelyOpen ? 'Open Weights' : 'Proprietary',
+  };
+}
+
 async function fetchOpenRouterModels(): Promise<{ ok: boolean; status: string; models: OpenRouterModel[] }> {
   try {
-    const res = await fetch('https://openrouter.ai/api/v1/models', {
-      headers: { Accept: 'application/json', 'User-Agent': 'ai-intelligence-terminal/3.0' },
-      signal: AbortSignal.timeout(12000),
-    });
+    const res = await fetchWithRetry(
+      'https://openrouter.ai/api/v1/models',
+      { headers: { Accept: 'application/json', 'User-Agent': 'ai-intelligence-terminal/3.0' } },
+      { retries: 2, timeoutMs: 12000 },
+    );
     if (!res.ok) return { ok: false, status: `HTTP ${res.status} (cached)`, models: [] };
     const json = (await res.json()) as { data?: OpenRouterModel[] };
     const list = Array.isArray(json.data) ? json.data : [];
@@ -157,9 +227,10 @@ async function fetchOpenRouterModels(): Promise<{ ok: boolean; status: string; m
 
 async function fetchLiveBenchStatus(): Promise<string> {
   try {
-    const res = await fetch(
+    const res = await fetchWithRetry(
       'https://datasets-server.huggingface.co/rows?dataset=livebench%2Freasoning&config=default&split=test&offset=0&length=1',
-      { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(5000) },
+      { headers: { Accept: 'application/json' } },
+      { retries: 1, timeoutMs: 5000 },
     );
     return res.ok ? 'live (HF dataset active)' : `HTTP ${res.status} (cached)`;
   } catch {
@@ -173,9 +244,10 @@ async function fetchHfLeaderboard(): Promise<{
 }> {
   const scores = new Map<string, { mmluPro?: number; gpqaDiamond?: number }>();
   try {
-    const res = await fetch(
+    const res = await fetchWithRetry(
       'https://datasets-server.huggingface.co/rows?dataset=open-llm-leaderboard%2Fcontents&config=default&split=train&offset=0&length=100',
-      { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(8000) },
+      { headers: { Accept: 'application/json' } },
+      { retries: 1, timeoutMs: 8000 },
     );
     if (!res.ok) return { status: `HTTP ${res.status} (cached)`, scores };
     const json = (await res.json()) as { rows?: Array<{ row?: Record<string, unknown> }> };
@@ -200,9 +272,10 @@ async function fetchHfLeaderboard(): Promise<{
 
 async function fetchArenaStatus(): Promise<string> {
   try {
-    const res = await fetch(
+    const res = await fetchWithRetry(
       'https://datasets-server.huggingface.co/rows?dataset=lmarena-ai%2Farena-hard-auto-v0.1&config=default&split=train&offset=0&length=1',
-      { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(5000) },
+      { headers: { Accept: 'application/json' } },
+      { retries: 1, timeoutMs: 5000 },
     );
     return res.ok ? 'live (verified)' : `HTTP ${res.status} (cached)`;
   } catch {
@@ -213,10 +286,11 @@ async function fetchArenaStatus(): Promise<string> {
 async function fetchYahooQuote(ticker: MarketTicker): Promise<MarketTicker> {
   try {
     const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ticker.symbol)}?interval=1d&range=5d`;
-    const res = await fetch(url, {
-      headers: { Accept: 'application/json', 'User-Agent': 'Mozilla/5.0' },
-      signal: AbortSignal.timeout(5000),
-    });
+    const res = await fetchWithRetry(
+      url,
+      { headers: { Accept: 'application/json', 'User-Agent': 'Mozilla/5.0' } },
+      { retries: 1, timeoutMs: 5000 },
+    );
     if (!res.ok) return { ...ticker, source: 'cached' };
     const json = (await res.json()) as {
       chart?: { result?: Array<{ meta?: { regularMarketPrice?: number; chartPreviousClose?: number; previousClose?: number } }> };
@@ -488,6 +562,122 @@ export async function syncAll(): Promise<{
         latest = newNode;
       }
     }
+
+    // Auto-discover unseen org prefixes / new labs from OpenRouter so new releases are never dropped
+    const unseenCandidates = orResult.models
+      .filter((m) => !existingOrIds.has(m.id.toLowerCase()))
+      .filter((m) => !/:free|:extended|:nitro|:floor|openrouter\/auto/.test(m.id.toLowerCase()))
+      .sort((a, b) => (b.created ?? 0) - (a.created ?? 0))
+      .slice(0, 45);
+
+    const autoFamilyLatest = new Map<string, ModelNode>();
+    for (const m of models) {
+      const prev = autoFamilyLatest.get(m.family);
+      if (!prev || m.generation >= prev.generation) autoFamilyLatest.set(m.family, m);
+    }
+
+    for (const cand of unseenCandidates) {
+      const cleanSlug = cand.id.replace(/[^a-zA-Z0-9.-]/g, '-').toLowerCase();
+      if (existingIds.has(cleanSlug)) continue;
+
+      const autoMeta = inferAutoFamily(cand.id, cand.name);
+      const cleanName = cand.name.includes(':') ? cand.name.split(':').slice(1).join(':').trim() : cand.name;
+      const releaseDate = cand.created ? new Date(cand.created * 1000).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10);
+      const inferred = inferParamsFromName(cleanName, cand.id, autoMeta.weightClass);
+      const lower = `${cand.id} ${cand.name}`.toLowerCase();
+
+      const tags: string[] = [];
+      if (/reason|think|r1|o1|o3|o4|qwq/.test(lower)) tags.push('reasoning');
+      if (/code|coder|dev|sonnet|gemini|deepseek/.test(lower)) tags.push('coding');
+      if (cand.architecture?.modality?.includes('image') || /vision|vl|omni/.test(lower)) tags.push('multimodal');
+      if (inferred.type === 'MoE') tags.push('moe');
+      if (autoMeta.weightClass === 'open-weight' && inferred.totalB <= 75) tags.push('local');
+
+      const pIn = parsePerMillion(cand.pricing?.prompt) ?? 0;
+      const pOut = parsePerMillion(cand.pricing?.completion) ?? 0;
+      const blended = r2((3 * pIn + pOut) / 4);
+      const costPerTask = r2((pIn * 0.015 + pOut * 0.004) || 0.001);
+
+      let matchedMmluPro: number | null = null;
+      let matchedGpqa: number | null = null;
+      if (autoMeta.weightClass === 'open-weight') {
+        const tail = cand.id.split('/')[1]?.toLowerCase() ?? '';
+        for (const [hfKey, hfScores] of hfResult.scores.entries()) {
+          if (tail && hfKey.includes(tail.slice(0, 14))) {
+            matchedMmluPro = hfScores.mmluPro ?? null;
+            matchedGpqa = hfScores.gpqaDiamond ?? null;
+            break;
+          }
+        }
+      }
+
+      const prevInFamily = autoFamilyLatest.get(autoMeta.family) ?? null;
+      const autoNode: ModelNode = {
+        id: cleanSlug,
+        name: cleanName,
+        family: autoMeta.family,
+        weightClass: autoMeta.weightClass,
+        generation: prevInFamily ? prevInFamily.generation + 1 : 1,
+        parentId: prevInFamily ? prevInFamily.id : null,
+        releaseDate,
+        knowledgeCutoff: releaseDate.slice(0, 7),
+        contextWindow: cand.context_length ?? 32768,
+        maxOutputTokens: cand.top_provider?.max_completion_tokens ?? 8192,
+        architecture: {
+          type: inferred.type,
+          totalParamsStr: inferred.totalStr,
+          activeParamsStr: inferred.activeStr,
+          totalParamsB: inferred.totalB,
+          activeParamsB: inferred.activeB,
+        },
+        quantizationFormats:
+          autoMeta.weightClass === 'open-weight'
+            ? ['FP16', 'FP8', 'Q4_K_M', ...(inferred.totalB <= 75 ? ['1.58-bit'] : [])]
+            : ['API Managed'],
+        vramFootprintGB: {
+          fp16: Math.round(inferred.totalB * 2.15),
+          fp8: Math.round(inferred.totalB * 1.1),
+          int4: Math.round(inferred.totalB * 0.62),
+          ternary: Math.round(inferred.totalB * 0.25),
+        },
+        inputCost1M: pIn,
+        outputCost1M: pOut,
+        cachedInputCost1M: r2(pIn * 0.25),
+        blendedCost1M: blended,
+        costPerTask,
+        tokensPerSec: null,
+        ttftMs: null,
+        trainingFlops: null,
+        trainingCostUsd: null,
+        energyWhPer1k: r2(Math.max(0.08, inferred.activeB * 0.014)),
+        license: autoMeta.license,
+        tags: tags.length > 0 ? tags : ['coding'],
+        openRouterId: cand.id,
+        benchmarks: {
+          compositeIQ: matchedMmluPro,
+          livebenchGlobal: null,
+          livebenchAgentic: null,
+          livebenchCoding: null,
+          livebenchReasoning: null,
+          livebenchBrowser: null,
+          sweBenchVerified: null,
+          gpqaDiamond: matchedGpqa,
+          aimeFrontierMath: null,
+          mmluPro: matchedMmluPro,
+          humanitysLastExam: null,
+          lmArenaTextElo: null,
+          lmArenaWebDevElo: null,
+          intelPerDollar: computeIntelPerDollar(matchedMmluPro, blended),
+          intelPerActiveParam: computeIntelPerParam(matchedMmluPro, inferred.activeB),
+        },
+        source: 'openrouter',
+      };
+
+      models.push(autoNode);
+      existingOrIds.add(cand.id.toLowerCase());
+      existingIds.add(cleanSlug);
+      autoFamilyLatest.set(autoMeta.family, autoNode);
+    }
   }
 
   const liveNews = [...hfNews, ...arsNews, ...tcNews].sort(
@@ -529,11 +719,50 @@ export async function syncAll(): Promise<{
     lastSynced: nowIso,
   };
 
+  const existingHistory = await readJsonOrNull<HistoryDatabase>(HISTORY_PATH);
+  const topFrontierIQs = models
+    .map((m) => m.benchmarks.compositeIQ)
+    .filter((v): v is number => typeof v === 'number' && Number.isFinite(v))
+    .sort((a, b) => b - a)
+    .slice(0, 10);
+  const pricedModels = models.filter((m) => m.blendedCost1M > 0);
+  const snapshot: HistorySnapshot = {
+    timestamp: nowIso,
+    totalModels: models.length,
+    openWeightCount: models.filter((m) => m.weightClass === 'open-weight').length,
+    avgFrontierIQ:
+      topFrontierIQs.length > 0
+        ? r2(topFrontierIQs.reduce((acc, v) => acc + v, 0) / topFrontierIQs.length)
+        : 0,
+    avgBlendedCost1M:
+      pricedModels.length > 0
+        ? r2(pricedModels.reduce((acc, m) => acc + m.blendedCost1M, 0) / pricedModels.length)
+        : 0,
+    capexRunRateB: profitabilityDb.annualCapexRunRateB,
+    realizedRevB: profitabilityDb.annualRealizedSoftwareRevB,
+    dramSsdYoySpikePct: impactDb.supplyChain.dramSsdYoySpikePct,
+    tickerPrices: Object.fromEntries(liveTickers.map((t) => [t.symbol, t.price])),
+  };
+
+  const prevSnapshots = Array.isArray(existingHistory?.snapshots) ? [...existingHistory.snapshots] : [];
+  const currentHourBucket = nowIso.slice(0, 13);
+  const lastSnap = prevSnapshots[prevSnapshots.length - 1];
+  if (lastSnap && lastSnap.timestamp.slice(0, 13) === currentHourBucket) {
+    prevSnapshots[prevSnapshots.length - 1] = snapshot;
+  } else {
+    prevSnapshots.push(snapshot);
+  }
+  const historyDb: HistoryDatabase = {
+    lastSynced: nowIso,
+    snapshots: prevSnapshots.slice(-180),
+  };
+
   await Promise.all([
     writeJsonAtomic(MODELS_PATH, modelsDb),
     writeJsonAtomic(MARKET_PATH, marketDb),
     writeJsonAtomic(PROFITABILITY_PATH, profitabilityDb),
     writeJsonAtomic(IMPACT_PATH, impactDb),
+    writeJsonAtomic(HISTORY_PATH, historyDb),
   ]);
 
   return { modelsDb, marketDb, profitabilityDb, impactDb };
@@ -570,6 +799,13 @@ async function startServer() {
     const data = await readJsonOrNull<ImpactDatabase>(IMPACT_PATH);
     if (data) return res.json(data);
     return res.json((await syncAll()).impactDb);
+  });
+
+  app.get('/api/history', async (_req, res) => {
+    const data = await readJsonOrNull<HistoryDatabase>(HISTORY_PATH);
+    if (data) return res.json(data);
+    await syncAll();
+    return res.json((await readJsonOrNull<HistoryDatabase>(HISTORY_PATH)) ?? { lastSynced: new Date().toISOString(), snapshots: [] });
   });
 
   app.post('/api/sync', async (_req, res) => {

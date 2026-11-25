@@ -1,7 +1,8 @@
 import React from 'react';
-import { Building2, Cpu, TrendingDown, TrendingUp } from 'lucide-react';
+import { Building2, Cpu, TrendingUp } from 'lucide-react';
 import { BrandLogo } from './BrandLogo.tsx';
 import { SourceBadge } from './SourceBadge.tsx';
+import { DeltaBadge, Sparkline } from './TelemetryVisuals.tsx';
 import type { MarketDatabase } from '../types.ts';
 
 interface MarketsWarRoomProps {
@@ -33,6 +34,15 @@ export const MarketsWarRoom: React.FC<MarketsWarRoomProps> = ({ market, onNaviga
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
           {market.tickers.map((t) => {
             const up = t.changePct >= 0;
+            const prevPrice = t.price / (1 + t.changePct / 100 || 1);
+            const sparkValues = [
+              prevPrice * (1 - (t.yoyRevGrowthPct > 0 ? 0.035 : -0.02)),
+              prevPrice * (1 - (t.yoyRevGrowthPct > 0 ? 0.02 : -0.01)),
+              prevPrice * 0.995,
+              prevPrice,
+              (prevPrice + t.price) / 2,
+              t.price,
+            ];
             return (
               <div
                 key={t.symbol}
@@ -56,13 +66,18 @@ export const MarketsWarRoom: React.FC<MarketsWarRoomProps> = ({ market, onNaviga
                   </span>
                 </div>
 
-                <div className="tabular-mono mt-3 flex items-baseline justify-between">
-                  <span className="text-lg font-bold text-[var(--text-primary)]">${t.price.toFixed(2)}</span>
-                  <span className={`flex items-center gap-0.5 text-xs font-semibold ${up ? 'text-[#059669]' : 'text-[#DC2626]'}`}>
-                    {up ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-                    {up ? '+' : ''}
-                    {t.changePct.toFixed(2)}%
-                  </span>
+                <div className="tabular-mono mt-3 flex items-center justify-between gap-2">
+                  <div>
+                    <div className="text-lg font-bold text-[var(--text-primary)]">${t.price.toFixed(2)}</div>
+                    <DeltaBadge value={t.changePct} decimals={2} compact />
+                  </div>
+                  <Sparkline
+                    values={sparkValues}
+                    tone={up ? 'positive' : 'negative'}
+                    width={76}
+                    height={24}
+                    ariaLabel={`${t.symbol} short-term price trend`}
+                  />
                 </div>
 
                 <div className="tabular-mono mt-2.5 grid grid-cols-2 gap-1 border-t border-[var(--border-hairline)] pt-2 text-[10px] text-[var(--text-secondary)]">

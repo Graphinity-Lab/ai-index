@@ -296,6 +296,23 @@ export interface ImpactDatabase {
   };
 }
 
+export interface HistorySnapshot {
+  timestamp: string;
+  totalModels: number;
+  openWeightCount: number;
+  avgFrontierIQ: number;
+  avgBlendedCost1M: number;
+  capexRunRateB: number;
+  realizedRevB: number;
+  dramSsdYoySpikePct: number;
+  tickerPrices: Record<string, number>;
+}
+
+export interface HistoryDatabase {
+  lastSynced: string;
+  snapshots: HistorySnapshot[];
+}
+
 export interface AxisMeta<T extends string> {
   key: T;
   label: string;

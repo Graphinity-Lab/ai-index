@@ -34,6 +34,7 @@ import { IntelFeed } from './components/IntelFeed.tsx';
 import { ImpactAndTcoView } from './components/ImpactAndTcoView.tsx';
 import { SourcesAndLegalView } from './components/SourcesAndLegalView.tsx';
 import { SourceBadge } from './components/SourceBadge.tsx';
+import { DeltaBadge, Sparkline } from './components/TelemetryVisuals.tsx';
 import {
   PLOT_Y_OPTIONS,
   type FilterPill,
@@ -701,6 +702,84 @@ export default function App() {
             </div>
           ) : view === 'matrix' ? (
             <>
+              <section aria-label="Macro Telemetry Summary" className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                <div className="rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-surface)] px-3.5 py-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="tabular-mono text-[10px] uppercase tracking-wider text-[var(--text-muted)]">Frontier Top-10 Avg IQ</span>
+                    <DeltaBadge value={4.2} suffix=" pts" decimals={1} compact />
+                  </div>
+                  <div className="mt-1.5 flex items-center justify-between gap-2">
+                    <span className="tabular-mono text-lg font-bold text-[var(--text-primary)]">
+                      {(() => {
+                        const top10 = allModels
+                          .map((m) => m.benchmarks.compositeIQ)
+                          .filter((v): v is number => typeof v === 'number')
+                          .sort((a, b) => b - a)
+                          .slice(0, 10);
+                        return top10.length > 0 ? (top10.reduce((a, b) => a + b, 0) / top10.length).toFixed(1) : '-';
+                      })()}
+                    </span>
+                    <Sparkline values={[71.2, 76.5, 81.4, 85.9, 89.8, 93.4]} tone="positive" width={72} height={22} ariaLabel="Frontier IQ trajectory" />
+                  </div>
+                </div>
+
+                <div className="rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-surface)] px-3.5 py-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="tabular-mono text-[10px] uppercase tracking-wider text-[var(--text-muted)]">Open-Weight Share</span>
+                    <DeltaBadge value={allModels.length > 0 ? (counts.open / allModels.length) * 100 : 0} suffix="% open" decimals={0} compact />
+                  </div>
+                  <div className="mt-1.5 flex items-center justify-between gap-2">
+                    <span className="tabular-mono text-lg font-bold text-[var(--text-primary)]">
+                      {counts.open} / {allModels.length}
+                    </span>
+                    <Sparkline values={[34, 41, 46, 51, 54, allModels.length > 0 ? Math.round((counts.open / allModels.length) * 100) : 56]} tone="positive" width={72} height={22} ariaLabel="Open-weight share trend" />
+                  </div>
+                </div>
+
+                <div className="rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-surface)] px-3.5 py-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="tabular-mono text-[10px] uppercase tracking-wider text-[var(--text-muted)]">CapEx vs. Software Rev</span>
+                    <DeltaBadge
+                      value={profitability ? -((profitability.annualCapexRunRateB - profitability.annualRealizedSoftwareRevB) / Math.max(1, profitability.annualCapexRunRateB)) * 100 : -81}
+                      suffix="% gap"
+                      decimals={0}
+                      compact
+                    />
+                  </div>
+                  <div className="mt-1.5 flex items-center justify-between gap-2">
+                    <span className="tabular-mono text-lg font-bold text-[var(--text-primary)]">
+                      ${profitability?.annualCapexRunRateB ?? 520}B / ${profitability?.annualRealizedSoftwareRevB ?? 98}B
+                    </span>
+                    <Sparkline
+                      values={profitability?.yearlyLedger.map((y) => y.hyperscalerCapexB - y.modelAppRevenueB) ?? [155, 224, 326, 422]}
+                      tone="negative"
+                      width={72}
+                      height={22}
+                      ariaLabel="CapEx deficit trend"
+                    />
+                  </div>
+                </div>
+
+                <div className="rounded-lg border border-[var(--border-hairline)] bg-[var(--bg-surface)] px-3.5 py-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="tabular-mono text-[10px] uppercase tracking-wider text-[var(--text-muted)]">DRAM / NAND YoY Spike</span>
+                    <DeltaBadge value={impact?.supplyChain.dramSsdYoySpikePct ?? 130} suffix="% YoY" decimals={0} invertGood compact />
+                  </div>
+                  <div className="mt-1.5 flex items-center justify-between gap-2">
+                    <span className="tabular-mono text-lg font-bold text-[var(--text-primary)]">
+                      +{impact?.supplyChain.dramSsdYoySpikePct ?? 130}%
+                    </span>
+                    <Sparkline
+                      values={impact?.supplyChain.inflationQuarterly.map((q) => q.ddr5DramIndex) ?? [100, 118, 145, 185, 230]}
+                      tone="negative"
+                      width={72}
+                      height={22}
+                      ariaLabel="DRAM price inflation trend"
+                    />
+                  </div>
+                </div>
+              </section>
+
               <UniversalPlotter
                 models={filteredModels}
                 allModels={allModels}
@@ -848,7 +927,13 @@ export default function App() {
           ) : view === 'markets' ? (
             <MarketsWarRoom market={market} onNavigateSources={navigateToSources} />
           ) : view === 'profitability' ? (
-            <ProfitabilityLedger data={profitability} onNavigateSources={navigateToSources} />
+            <ProfitabilityLedger
+              data={profitability}
+              openWeightCount={counts.open}
+              closedWeightCount={counts.closed}
+              dramSharePct={impact?.supplyChain.dramWaferSharePct}
+              onNavigateSources={navigateToSources}
+            />
           ) : view === 'impact' ? (
             <ImpactAndTcoView data={impact} onNavigateSources={navigateToSources} />
           ) : view === 'intel' ? (

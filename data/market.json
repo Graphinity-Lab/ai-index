@@ -1,5 +1,5 @@
 {
-  "lastSynced": "2026-11-25T21:12:23.745Z",
+  "lastSynced": "2026-11-25T21:26:52.615Z",
   "tickers": [
     {
       "symbol": "NVDA",
@@ -47,8 +47,8 @@
       "symbol": "TSM",
       "name": "TSMC",
       "sector": "Silicon",
-      "price": 342.17,
-      "changePct": -5.64,
+      "price": 342.34,
+      "changePct": -5.59,
       "marketCapB": 1005,
       "peRatio": 28.6,
       "yoyRevGrowthPct": 36,
@@ -159,8 +159,8 @@
       "symbol": "ORCL",
       "name": "Oracle Corp",
       "sector": "Hyperscaler",
-      "price": 103.87,
-      "changePct": -8.8,
+      "price": 103.88,
+      "changePct": -8.79,
       "marketCapB": 518,
       "peRatio": 43.6,
       "yoyRevGrowthPct": 9,
