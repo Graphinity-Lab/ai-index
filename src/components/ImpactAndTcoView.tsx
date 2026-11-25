@@ -180,7 +180,7 @@ export const ImpactAndTcoView: React.FC<ImpactAndTcoViewProps> = ({ data, onNavi
                           ({markup >= 0 ? '+' : ''}{Math.round(markup)}%)
                         </span>
                       </td>
-                      <td className="tabular-mono px-3 py-2 text-[var(--text-secondary)]">{g.cloudHourlyUsd ? `$${g.cloudHourlyUsd.toFixed(2)}` : '—'}</td>
+                      <td className="tabular-mono px-3 py-2 text-[var(--text-secondary)]">{g.cloudHourlyUsd ? `$${g.cloudHourlyUsd.toFixed(2)}` : '-'}</td>
                       <td className="tabular-mono px-3 py-2 text-[var(--text-muted)]">{g.leadTimeWeeks}</td>
                     </tr>
                   );

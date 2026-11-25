@@ -222,7 +222,7 @@ export const ModelInspectorDrawer: React.FC<ModelInspectorDrawerProps> = ({
               })}
             </div>
           ) : (
-            <p className="mt-2 inline-flex items-center gap-1 text-[11px] text-[var(--text-secondary)]"><Lock className="h-3 w-3" /> Proprietary weights — hosted API inference only.</p>
+            <p className="mt-2 inline-flex items-center gap-1 text-[11px] text-[var(--text-secondary)]"><Lock className="h-3 w-3" /> Proprietary weights: hosted API inference only.</p>
           )}
         </div>
 

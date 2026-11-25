@@ -172,7 +172,7 @@ export const SourcesAndLegalView: React.FC<SourcesAndLegalViewProps> = ({
             </p>
             <p>
               <strong className="text-[var(--text-primary)]">Privacy Officer Contact:</strong>{' '}
-              Graphinity Lab, Ontario, Canada —{' '}
+              Graphinity Lab, Ontario, Canada ·{' '}
               <a href="mailto:privacy@graphinitylab.com" className="underline text-[var(--text-primary)]">
                 privacy@graphinitylab.com
               </a>

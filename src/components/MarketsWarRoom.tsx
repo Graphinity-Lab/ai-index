@@ -110,7 +110,7 @@ export const MarketsWarRoom: React.FC<MarketsWarRoomProps> = ({ market, onNaviga
                   <td className="tabular-mono px-3 py-2.5 text-[var(--text-secondary)]">{acc.processNode}</td>
                   <td className="tabular-mono px-3 py-2.5 text-[var(--text-primary)]">{acc.fp8Tflops.toLocaleString()}</td>
                   <td className="tabular-mono px-3 py-2.5 text-[var(--text-secondary)]">
-                    {acc.fp4Tflops ? acc.fp4Tflops.toLocaleString() : '—'}
+                    {acc.fp4Tflops ? acc.fp4Tflops.toLocaleString() : '-'}
                   </td>
                   <td className="tabular-mono px-3 py-2.5 text-[var(--text-primary)]">{acc.hbmCapacityGB} GB</td>
                   <td className="tabular-mono px-3 py-2.5 text-[var(--text-primary)]">{acc.hbmBandwidthTBps} TB/s</td>

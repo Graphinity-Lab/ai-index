@@ -1139,7 +1139,7 @@ export const UniversalPlotter: React.FC<UniversalPlotterProps> = ({
             <div className="flex items-center gap-2">
               <BrandLogo org={selectedModel.family} size={18} className="text-[var(--text-primary)]" />
               <span className="text-sm font-semibold text-[var(--text-primary)]">
-                {selectedModel.family} — {selectedModel.name}
+                {selectedModel.family} - {selectedModel.name}
               </span>
               <span className="tabular-mono inline-flex items-center gap-1 text-xs text-[var(--text-secondary)]">
                 {selectedModel.weightClass === 'open-weight' ? <Unlock className="h-3 w-3" /> : <Lock className="h-3 w-3" />}
@@ -1251,7 +1251,7 @@ export const UniversalPlotter: React.FC<UniversalPlotterProps> = ({
                     onChange={setPlantParentId}
                     options={[
                       { value: '', label: 'None (Genesis)' },
-                      ...allModels.map((m) => ({ value: m.id, label: `${m.family} — ${m.name}` })),
+                      ...allModels.map((m) => ({ value: m.id, label: `${m.family} - ${m.name}` })),
                     ]}
                   />
                 </div>

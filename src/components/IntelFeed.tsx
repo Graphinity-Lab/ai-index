@@ -28,15 +28,16 @@ function decodeEntities(raw: string): string {
     '&lsquo;': '‘',
     '&rdquo;': '”',
     '&ldquo;': '“',
-    '&ndash;': '–',
-    '&mdash;': '—',
+    '&ndash;': '-',
+    '&mdash;': '-',
     '&hellip;': '…',
     '&nbsp;': ' ',
   };
   return raw
     .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
     .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
-    .replace(/&[a-zA-Z0-9#]+;/g, (ent) => named[ent] ?? ent);
+    .replace(/&[a-zA-Z0-9#]+;/g, (ent) => named[ent] ?? ent)
+    .replace(/\u2014/g, '-');
 }
 
 function formatRelative(iso: string): string {

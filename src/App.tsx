@@ -82,7 +82,7 @@ const NAV_ITEMS = [
     code: '01',
     label: 'Multi-Variable Matrix',
     Icon: BarChart3,
-    guidingQuestion: 'Where does capability justify the compute price—and where is the diminishing return?',
+    guidingQuestion: 'Where does capability justify the compute price, and where is the diminishing return?',
   },
   {
     id: 'registry' as const,
@@ -96,7 +96,7 @@ const NAV_ITEMS = [
     code: '03',
     label: 'Company & Lab Dossiers',
     Icon: Building2,
-    guidingQuestion: 'Which labs are compounding compute advantages—and which are constrained by capital or silicon?',
+    guidingQuestion: 'Which labs are compounding compute advantages, and which are constrained by capital or silicon?',
   },
   {
     id: 'markets' as const,
@@ -131,7 +131,7 @@ const NAV_ITEMS = [
     code: '08',
     label: 'Sources, Charter & Legal',
     Icon: FileText,
-    guidingQuestion: 'Where does every number come from—and how does this open-source index protect user privacy?',
+    guidingQuestion: 'Where does every number come from, and how does this open-source index protect user privacy?',
   },
 ];
 
@@ -636,10 +636,10 @@ export default function App() {
             <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
               <div className="max-w-2xl">
                 <h2 className="text-sm font-semibold text-[var(--text-primary)] sm:text-base">
-                  Are frontier AI gains outrunning their real-world costs—or are we still early in the curve?
+                  Are frontier AI gains outrunning their real-world costs, or are we still early in the curve?
                 </h2>
                 <p className="mt-0.5 text-xs text-[var(--text-secondary)]">
-                  We aggregate live telemetry across models, compute, silicon markets, and physical infrastructure—without hype or bias—so you can explore the evidence and decide for yourself.
+                  We aggregate live telemetry across models, compute, silicon markets, and physical infrastructure, without hype or bias, so you can explore the evidence and decide for yourself.
                 </p>
               </div>
               <div className="flex flex-wrap gap-1.5 text-[11px]">
@@ -812,7 +812,7 @@ export default function App() {
                             <button onClick={() => predecessor && setInspectedModelId(predecessor.id)} disabled={!predecessor} className="border-l border-[var(--border-hairline)] pl-2.5 text-left hover:underline disabled:cursor-default disabled:no-underline">
                               <div className="text-[10px] text-[var(--text-muted)] uppercase">Predecessor</div>
                               <div className="truncate font-medium text-[var(--text-secondary)]">{predecessor ? predecessor.name : 'Genesis'}</div>
-                              <div className="tabular-mono text-[10px] text-[var(--text-muted)]">{predecessor ? predecessor.releaseDate : '—'}</div>
+                              <div className="tabular-mono text-[10px] text-[var(--text-muted)]">{predecessor ? predecessor.releaseDate : '-'}</div>
                             </button>
                           </div>
 
@@ -901,7 +901,7 @@ export default function App() {
                   Where Do You Stand?
                 </div>
                 <p className="text-[11px] text-[var(--text-secondary)]">
-                  Based on the telemetry above, how do you weigh the current AI curve? (Saved strictly in localStorage — zero tracking or cookies.)
+                  Based on the telemetry above, how do you weigh the current AI curve? (Saved strictly in localStorage; zero tracking or cookies.)
                 </p>
               </div>
               <div className="flex flex-wrap gap-1.5 text-[11px]">
@@ -940,7 +940,7 @@ export default function App() {
               </button>
             </div>
             <p className="text-[10px] text-[var(--text-muted)]">
-              Zero ownership claimed on third-party benchmarks, weights, or trademarks. Informational telemetry only — not financial advice. Cookie-free.
+              Zero ownership claimed on third-party benchmarks, weights, or trademarks. Informational telemetry only; not financial advice. Cookie-free.
             </p>
           </div>
         </footer>

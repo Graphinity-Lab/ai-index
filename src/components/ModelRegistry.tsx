@@ -219,7 +219,7 @@ export const ModelRegistry: React.FC<ModelRegistryProps> = ({
                       ${m.inputCost1M.toFixed(2)} / ${m.outputCost1M.toFixed(2)}
                     </td>
                     <td className="tabular-mono px-3 py-2 font-semibold text-[var(--text-primary)]">
-                      {score !== null ? score : '—'}
+                      {score !== null ? score : '-'}
                     </td>
                     <td className="tabular-mono px-3 py-2 text-[var(--text-secondary)]">{m.releaseDate}</td>
                     <td className="max-w-[140px] truncate px-3 py-2 text-[var(--text-muted)]">{m.license}</td>
