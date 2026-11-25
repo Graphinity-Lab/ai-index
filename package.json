@@ -13,7 +13,7 @@
     "dev": "concurrently -n API,WEB -c cyan,magenta \"npm run dev:server\" \"npm run dev:client\"",
     "dev:client": "vite",
     "dev:server": "tsx watch server/sync.ts",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && tsx scripts/prerender-seo.ts",
     "sync": "tsx server/sync.ts --once",
     "typecheck": "tsc --noEmit"
   },
