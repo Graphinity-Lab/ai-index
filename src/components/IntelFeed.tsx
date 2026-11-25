@@ -16,6 +16,29 @@ const CATEGORIES: Array<'ALL' | NewsCategory> = [
   'MARKETS & IPOS',
 ];
 
+function decodeEntities(raw: string): string {
+  const named: Record<string, string> = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&apos;': "'",
+    '&#39;': "'",
+    '&rsquo;': '’',
+    '&lsquo;': '‘',
+    '&rdquo;': '”',
+    '&ldquo;': '“',
+    '&ndash;': '–',
+    '&mdash;': '—',
+    '&hellip;': '…',
+    '&nbsp;': ' ',
+  };
+  return raw
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
+    .replace(/&[a-zA-Z0-9#]+;/g, (ent) => named[ent] ?? ent);
+}
+
 function formatRelative(iso: string): string {
   const diffH = Math.max(0, Math.round((Date.now() - Date.parse(iso)) / 3600000));
   if (diffH < 1) return 'JUST NOW';
@@ -90,10 +113,10 @@ export const IntelFeed: React.FC<IntelFeedProps> = ({ news, onNavigateSources })
                 </span>
               </div>
               <h3 className="mt-2 text-sm font-semibold text-[var(--text-primary)] group-hover:underline">
-                {item.title}
+                {decodeEntities(item.title)}
               </h3>
               {item.summary && (
-                <p className="mt-1.5 text-xs text-[var(--text-secondary)] line-clamp-3">{item.summary}</p>
+                <p className="mt-1.5 text-xs text-[var(--text-secondary)] line-clamp-3">{decodeEntities(item.summary)}</p>
               )}
             </div>
             <div className="mt-3 flex items-center gap-1 text-[11px] text-[var(--text-muted)] group-hover:text-[var(--text-primary)]">

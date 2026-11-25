@@ -36,6 +36,7 @@ export const ModelRegistry: React.FC<ModelRegistryProps> = ({
   const [sortField, setSortField] = useState<SortField>('releaseDate');
   const [sortAsc, setSortAsc] = useState(false);
   const [compareIds, setCompareIds] = useState<string[]>([]);
+  const [benchmarkedOnly, setBenchmarkedOnly] = useState(false);
 
   const toggleSort = (field: SortField) => {
     if (sortField === field) setSortAsc((v) => !v);
@@ -46,7 +47,10 @@ export const ModelRegistry: React.FC<ModelRegistryProps> = ({
   };
 
   const sortedModels = useMemo(() => {
-    return [...models].sort((a, b) => {
+    const base = benchmarkedOnly
+      ? models.filter((m) => m.benchmarks[activeBenchmarkKey] !== null)
+      : models;
+    return [...base].sort((a, b) => {
       let cmp = 0;
       switch (sortField) {
         case 'name':
@@ -73,7 +77,7 @@ export const ModelRegistry: React.FC<ModelRegistryProps> = ({
       }
       return sortAsc ? cmp : -cmp;
     });
-  }, [models, sortField, sortAsc, activeBenchmarkKey]);
+  }, [models, benchmarkedOnly, sortField, sortAsc, activeBenchmarkKey]);
 
   const toggleCompare = (id: string) => {
     setCompareIds((prev) => {
@@ -135,6 +139,30 @@ export const ModelRegistry: React.FC<ModelRegistryProps> = ({
             <p className="text-xs text-[var(--text-secondary)]">
               Click any row to open the Deep Spec Inspector, or select up to 4 models for side-by-side comparison.
             </p>
+          </div>
+          <div className="tabular-mono flex items-center gap-1.5 text-[11px]">
+            <button
+              type="button"
+              onClick={() => setBenchmarkedOnly(false)}
+              className={`rounded border px-2.5 py-1 transition-colors ${
+                !benchmarkedOnly
+                  ? 'border-[var(--border-strong)] bg-[var(--bg-elevated)] font-semibold text-[var(--text-primary)]'
+                  : 'border-[var(--border-hairline)] bg-[var(--bg-sub)] text-[var(--text-secondary)]'
+              }`}
+            >
+              All Models ({models.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setBenchmarkedOnly(true)}
+              className={`rounded border px-2.5 py-1 transition-colors ${
+                benchmarkedOnly
+                  ? 'border-[var(--border-strong)] bg-[var(--bg-elevated)] font-semibold text-[var(--text-primary)]'
+                  : 'border-[var(--border-hairline)] bg-[var(--bg-sub)] text-[var(--text-secondary)]'
+              }`}
+            >
+              Benchmarked Only
+            </button>
           </div>
         </div>
 

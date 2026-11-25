@@ -32,7 +32,12 @@ export const LabDossiers: React.FC<LabDossiersProps> = ({
         {dossiers.map((d) => {
           const roster = models
             .filter((m) => d.flagshipFamilies.includes(m.family))
-            .sort((a, b) => b.generation - a.generation)
+            .sort((a, b) => {
+              const iqA = a.benchmarks.compositeIQ ?? -1;
+              const iqB = b.benchmarks.compositeIQ ?? -1;
+              if (iqB !== iqA) return iqB - iqA;
+              return b.releaseDate.localeCompare(a.releaseDate);
+            })
             .slice(0, 6);
 
           return (

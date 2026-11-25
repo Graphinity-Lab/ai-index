@@ -505,10 +505,10 @@ export const UniversalPlotter: React.FC<UniversalPlotterProps> = ({
     }));
   }, [validModels]);
 
-  // Screen-space label collision avoidance so dense 2026 clusters never overlap
-  const visibleLabelIds = useMemo(() => {
+  // Screen-space label collision avoidance + edge-flipping so 1x zoom is clean & never clips
+  const labelPlacement = useMemo(() => {
     const placed: Array<{ x: number; y: number; w: number; h: number }> = [];
-    const visible = new Set<string>();
+    const placement = new Map<string, { anchor: 'start' | 'middle' | 'end'; dx: number }>();
 
     const candidates: Array<{ node: ModelNode; sx: number; sy: number; priority: number }> = [];
     for (const series of familySeries) {
@@ -521,7 +521,7 @@ export const UniversalPlotter: React.FC<UniversalPlotterProps> = ({
             ? true
             : labelMode === 'tips'
               ? isLatest || isSelected || isChain
-              : zoom >= 1.8 || isLatest || isSelected || isChain || node.isCustom;
+              : zoom > 1.5 || isSelected || isChain || node.isCustom || (isLatest && (node.benchmarks.compositeIQ ?? 0) >= 85);
 
         if (!wantsLabel) return;
         const sx = pan.x + toWorldX(node) * zoom;
@@ -536,23 +536,30 @@ export const UniversalPlotter: React.FC<UniversalPlotterProps> = ({
     candidates.sort((a, b) => b.priority - a.priority || b.sy - a.sy);
 
     for (const c of candidates) {
+      const anchor: 'start' | 'middle' | 'end' =
+        c.sx > width - pad.right - 95 ? 'end' : c.sx < pad.left + 80 ? 'start' : 'middle';
+      const dx = anchor === 'end' ? -6 : anchor === 'start' ? 6 : 0;
+
       if (labelMode === 'all') {
-        visible.add(c.node.id);
+        placement.set(c.node.id, { anchor, dx });
         continue;
       }
-      const boxW = Math.min(135, c.node.name.length * 6.2 + 12);
-      const boxH = 14;
-      const lx = c.sx - boxW / 2;
-      const ly = c.sy - 18;
+
+      const boxW = Math.min(145, c.node.name.length * 6.5 + 18);
+      const boxH = 18;
+      const lx = anchor === 'end' ? c.sx - boxW : anchor === 'start' ? c.sx : c.sx - boxW / 2;
+      const ly = c.sy - 20;
       const collides = placed.some(
         (p) => lx < p.x + p.w && lx + boxW > p.x && ly < p.y + p.h && ly + boxH > p.y,
       );
       if (!collides || c.priority >= 3) {
-        visible.add(c.node.id);
-        placed.push({ x: lx, y: ly, w: boxW, h: boxH });
+        if (placed.length < 7 || zoom > 1.5 || c.priority >= 3) {
+          placement.set(c.node.id, { anchor, dx });
+          placed.push({ x: lx, y: ly, w: boxW, h: boxH });
+        }
       }
     }
-    return visible;
+    return placement;
   }, [familySeries, labelMode, zoom, pan, selectedModelId, highlightedIds, yVar, xVar, xMin, xMax, yMin, yMax, width]);
 
   const paretoPath = useMemo(() => {
@@ -982,7 +989,7 @@ export const UniversalPlotter: React.FC<UniversalPlotterProps> = ({
                       const isHovered = node.id === hoveredId;
                       const nodeColor = getNodeColor(node);
                       const r = getRadius(node, isSelected, isHovered);
-                      const showLabel = visibleLabelIds.has(node.id);
+                      const lbl = labelPlacement.get(node.id);
 
                       return (
                         <g
@@ -1015,11 +1022,11 @@ export const UniversalPlotter: React.FC<UniversalPlotterProps> = ({
                             stroke="var(--bg-canvas)"
                             strokeWidth={1.1 / Math.sqrt(zoom)}
                           />
-                          {showLabel && (
+                          {lbl && (
                             <text
-                              x={x}
+                              x={x + lbl.dx / Math.sqrt(zoom)}
                               y={y - r - 4 / Math.sqrt(zoom)}
-                              textAnchor="middle"
+                              textAnchor={lbl.anchor}
                               className="tabular-mono pointer-events-none fill-[var(--text-primary)] font-medium"
                               style={{ fontSize: `${9.5 / Math.sqrt(zoom)}px` }}
                             >

@@ -243,17 +243,32 @@ function classifyNews(title: string, fallback: NewsCategory): NewsCategory {
   return fallback;
 }
 
-function stripTags(raw: string): string {
+function decodeHtmlEntities(raw: string): string {
+  const named: Record<string, string> = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&apos;': "'",
+    '&#39;': "'",
+    '&rsquo;': '’',
+    '&lsquo;': '‘',
+    '&rdquo;': '”',
+    '&ldquo;': '“',
+    '&ndash;': '–',
+    '&mdash;': '—',
+    '&hellip;': '…',
+    '&nbsp;': ' ',
+  };
   return raw
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/\s+/g, ' ')
-    .trim();
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec, 10)))
+    .replace(/&[a-zA-Z0-9#]+;/g, (ent) => named[ent] ?? ent);
+}
+
+function stripTags(raw: string): string {
+  const withoutCdata = raw.replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1').replace(/<[^>]+>/g, ' ');
+  return decodeHtmlEntities(withoutCdata).replace(/\s+/g, ' ').trim();
 }
 
 async function fetchRssFeed(url: string, sourceName: string, defaultCategory: NewsCategory): Promise<NewsItem[]> {

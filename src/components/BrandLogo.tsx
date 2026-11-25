@@ -34,7 +34,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({ org, size = 16, className 
   if (key.includes('anthropic')) {
     return (
       <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} aria-label="Anthropic">
-        <path d="M5 19L10.5 5h3L19 19h-2.6l-1.2-3.2H8.8L7.6 19H5zm4.6-5.4h4.8L12 7.4l-2.4 6.2z" fill="currentColor" />
+        <path d="M4.5 19L10 5M14 5l5.5 14M7.5 14.5h5" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     );
   }

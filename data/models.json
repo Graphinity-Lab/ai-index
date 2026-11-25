@@ -1,5 +1,5 @@
 {
-  "lastSynced": "2026-11-25T20:52:49.224Z",
+  "lastSynced": "2026-11-25T21:05:16.536Z",
   "syncStatus": {
     "openrouter": "live (474 models)",
     "livebench": "live (HF dataset active)",
@@ -8239,10 +8239,10 @@
         "int4": 43,
         "ternary": 18
       },
-      "inputCost1M": 0.65,
+      "inputCost1M": 0.64,
       "outputCost1M": 1.57,
       "cachedInputCost1M": 0.16,
-      "blendedCost1M": 0.88,
+      "blendedCost1M": 0.87,
       "costPerTask": 0.02,
       "tokensPerSec": null,
       "ttftMs": null,
@@ -10227,7 +10227,7 @@
       "releaseDate": "2026-02-16",
       "knowledgeCutoff": "2026-02",
       "contextWindow": 262144,
-      "maxOutputTokens": 235929,
+      "maxOutputTokens": 81920,
       "architecture": {
         "type": "MoE",
         "totalParamsStr": "397B",
@@ -10246,10 +10246,10 @@
         "int4": 246,
         "ternary": 99
       },
-      "inputCost1M": 0.5,
-      "outputCost1M": 3.6,
-      "cachedInputCost1M": 0.13,
-      "blendedCost1M": 1.27,
+      "inputCost1M": 0.45,
+      "outputCost1M": 3,
+      "cachedInputCost1M": 0.11,
+      "blendedCost1M": 1.09,
       "costPerTask": 0.02,
       "tokensPerSec": null,
       "ttftMs": null,
