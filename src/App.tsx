@@ -462,7 +462,7 @@ export default function App() {
             <div className="mt-1 flex items-center justify-between">
               <span>CONTINUOUSLY UPDATED</span>
               <a
-                href="https://github.com/GraphinityLab/ai-index"
+                href="https://github.com/Graphinity-Lab/ai-index"
                 target="_blank"
                 rel="noreferrer"
                 className="underline hover:text-[var(--text-primary)]"

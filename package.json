@@ -1,7 +1,13 @@
 {
   "name": "ai-model-lineage-matrix",
-  "private": true,
+  "private": false,
   "version": "1.0.0",
+  "license": "MIT",
+  "homepage": "https://ai.graphinitylab.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Graphinity-Lab/ai-index.git"
+  },
   "type": "module",
   "scripts": {
     "dev": "concurrently -n API,WEB -c cyan,magenta \"npm run dev:server\" \"npm run dev:client\"",

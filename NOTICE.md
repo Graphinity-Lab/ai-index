@@ -1,6 +1,6 @@
 # Open-Source Notice & Data Attribution
 
-**Graphinity Lab // AI Index** (`https://ai.graphinitylab.com`) is released under the MIT License.
+**Graphinity Lab // AI Index** (`https://ai.graphinitylab.com` • `https://github.com/Graphinity-Lab/ai-index`) is released under the MIT License.
 
 > **Zero Ownership Claim:** Graphinity Lab does not claim ownership of third-party benchmarks, model weights, company trademarks, or upstream research datasets. This project acts strictly as a transparent, open-source aggregation and visualization layer that credits and links directly to every original source.
 

@@ -210,7 +210,10 @@ export const SourcesAndLegalView: React.FC<SourcesAndLegalViewProps> = ({
             </p>
             <p>
               <strong className="text-[var(--text-primary)]">Open-Source Software Attribution:</strong>{' '}
-              Built with React 18, Vite, Tailwind CSS, TypeScript, Express, node-cron, and Lucide Icons. Source code is distributed under the MIT License (<code className="tabular-mono">LICENSE</code> / <code className="tabular-mono">NOTICE.md</code>).
+              Built with React 18, Vite, Tailwind CSS, TypeScript, Express, node-cron, and Lucide Icons. Source code is distributed under the MIT License at{' '}
+              <a href="https://github.com/Graphinity-Lab/ai-index" target="_blank" rel="noreferrer" className="underline text-[var(--text-primary)]">
+                github.com/Graphinity-Lab/ai-index
+              </a>.
             </p>
             <p>
               <strong className="text-[var(--text-primary)]">Accessibility Feedback:</strong>{' '}
